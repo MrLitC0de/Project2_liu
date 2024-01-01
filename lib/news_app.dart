@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,13 +39,17 @@ class _NewsAppState extends State<NewsApp> {
           error = '';
         });
       } else {
-        print('Failed to fetch authors and news. Error: ${response.body}');
+        if (kDebugMode) {
+          print('Failed to fetch authors and news. Error: ${response.body}');
+        }
         setState(() {
           error = 'Failed to fetch authors and news. Error: ${response.body}';
         });
       }
     } catch (error) {
-      print('An error occurred while fetching authors and news: $error');
+      if (kDebugMode) {
+        print('An error occurred while fetching authors and news: $error');
+      }
       setState(() {
         // error = 'An error occurred while fetching authors and news: $error';
       });
@@ -89,7 +94,7 @@ class _NewsAppState extends State<NewsApp> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AddAuthor(),
+                builder: (context) => const AddAuthor(),
               ),
             );
           },
